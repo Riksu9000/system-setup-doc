@@ -37,11 +37,11 @@ libx11 libxft libxinerama xclip xorg-server xorg-xev xorg-xinit xorg-xkill xorg-
 
 ## local hostname resolution
 
-- Edit `/etc/nsswitch.conf` and add `mdns_minimal [NOTFOUND=return]` before resolve
+Edit `/etc/nsswitch.conf` and add `mdns_minimal [NOTFOUND=return]` before resolve
 ```
 systemctl enable avahi-daemon.service
 ```
-- Reboot (is starting service enough?)
+Reboot (is starting service enough?)
 
 ## dash shell
 
@@ -83,10 +83,7 @@ Set `MAKEFLAGS` to `-j$(nproc)"`
 
 ## /etc/pacman.conf
 
-- Uncomment Color
-- Add ILoveCandy
-- Optionally enable VerbosePkgList for columnated package listing on large monitors
-- Optionally enable ParallelDownloads
+Configure to liking
 
 # X11 setup
 
