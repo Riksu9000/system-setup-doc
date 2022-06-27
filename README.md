@@ -1,4 +1,4 @@
-This is meant as a list of things to check after following the official Arch Linux installation guide.
+This is a checklist of things to do after following the official Arch Linux installation guide.
 Most of these things can apply to other minimal distributions.
 
 Previously I've attempted to maintain a system setup script.
@@ -12,16 +12,48 @@ Also it's nice to set up systems manually and know exactly which commands have b
 
 Can't live without these.
 
-Arch Linux: `avahi base-devel dash git man-db neovim opendoas openssh terminus-font`
+```
+avahi base-devel cups dash git man-db neovim nss-mdns opendoas openssh terminus-font
+```
 
  - Note: sudo is installed as a dependency of base-devel.
  - Install xclip or wl-clipboard, depending on which protocol is used.
+
+## Install yay
+
+```
+git clone https://aur.archlinux.org/yay.git
+```
 
 ## X11 deps
 
 When using `dwm`, install these.
 
-Arch Linux: `libx11 libxft libxinerama xclip xorg-server xorg-xev xorg-xinit xorg-xkill xorg-xprop xorg-xrandr xorg-xsetroot`
+```
+libx11 libxft libxinerama xclip xorg-server xorg-xev xorg-xinit xorg-xkill xorg-xprop xorg-xrandr xorg-xsetroot
+```
+
+# Enable software
+
+## local hostname resolution
+
+- Edit `/etc/nsswitch.conf` and add `mdns_minimal [NOTFOUND=return]` before resolve
+```
+systemctl enable avahi-daemon.service
+```
+- Reboot (is starting service enough?)
+
+## dash shell
+
+```
+ln -fs /bin/dash /bin/sh
+```
+
+## printer service
+
+```
+systemctl enable cups.socket
+```
 
 # Config files `/etc/`
 
@@ -55,26 +87,6 @@ Set `MAKEFLAGS` to `-j$(nproc)"`
 - Add ILoveCandy
 - Optionally enable VerbosePkgList for columnated package listing on large monitors
 - Optionally enable ParallelDownloads
-
-# Enable local hostname resolution
-
-Arch Linux:
-
-- `systemctl enable avahi-daemon.service`
-- Edit `/etc/nsswitch.conf` and add `mdns_minimal [NOTFOUND=return]` before resolve
-- Reboot (is starting service enough?)
-
-# Enable dash shell
-
-Arch Linux: `ln -fs /bin/dash /bin/sh`
-
-# Enable printer service
-
-Arch Linux: `systemctl enable cups.socket`
-
-# Install `yay`
-
-`git clone https://aur.archlinux.org/yay.git`
 
 # X11 setup
 
