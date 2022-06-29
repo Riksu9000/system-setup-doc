@@ -8,7 +8,7 @@ Also it's nice to set up systems manually and know exactly which commands have b
 
 # Packages
 
-## Basic
+### Basic
 
 Can't live without these.
 
@@ -19,13 +19,13 @@ avahi base-devel cups dash git man-db neovim nss-mdns opendoas openssh terminus-
  - Note: sudo is installed as a dependency of base-devel.
  - Install xclip or wl-clipboard, depending on which protocol is used.
 
-## Install yay
+### Install yay
 
 ```
 git clone https://aur.archlinux.org/yay.git
 ```
 
-## X11 deps
+### X11 deps
 
 When using `dwm`, install these.
 
@@ -35,7 +35,7 @@ libx11 libxft libxinerama xclip xorg-server xorg-xev xorg-xinit xorg-xkill xorg-
 
 # Enable software
 
-## local hostname resolution
+### local hostname resolution
 
 Edit `/etc/nsswitch.conf` and add `mdns_minimal [NOTFOUND=return]` before resolve
 ```
@@ -43,13 +43,13 @@ systemctl enable avahi-daemon.service
 ```
 Reboot (is starting service enough?)
 
-## dash shell
+### dash shell
 
 ```
 ln -fs /bin/dash /bin/sh
 ```
 
-## printer service
+### printer service
 
 ```
 systemctl enable cups.socket
@@ -57,7 +57,7 @@ systemctl enable cups.socket
 
 # Config files `/etc/`
 
-## /etc/doas.conf
+### /etc/doas.conf
 
 Example configuration
 
@@ -68,7 +68,7 @@ permit nopass :storage cmd mount
 permit nopass :storage cmd umount
 ```
 
-## /etc/locale.conf
+### /etc/locale.conf
 
 Default units can be set here.
 
@@ -77,20 +77,28 @@ LC_MEASUREMENT=fi_FI.UTF-8
 LC_MONETARY=fi_FI.UTF-8
 ```
 
-## /etc/makepkg.conf
+### /etc/makepkg.conf
 
 Set `MAKEFLAGS` to `-j$(nproc)"`
 
-## /etc/pacman.conf
+### /etc/pacman.conf
 
 Configure to liking
 
-# X11 setup
+### /etc/udev/rules.d/backlight.rules
 
-## Touchpad
+This may be required when using simple window managers
 
 ```
-# /etc/X11/xorg.conf.d/30-touchpad.conf
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+```
+
+### /etc/X11/xorg.conf.d/30-touchpad.conf
+
+Touchpad configuration for X11
+
+```
 Section "InputClass"
 	Identifier "touchpad"
 	Driver "libinput"
@@ -100,14 +108,4 @@ Section "InputClass"
 	Option "NaturalScrolling" "true"
 	Option "AccelSpeed" "0.0"
 EndSection
-```
-
-## Backlight
-
-This may be required when using simple window managers
-
-```
-# /etc/udev/rules.d
-ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
-ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
 ```
